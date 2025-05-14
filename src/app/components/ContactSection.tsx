@@ -45,7 +45,7 @@ export const ContactSection = () => {
   
   return (
     <section id="contact" className="py-24 bg-black text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
@@ -56,7 +56,7 @@ export const ContactSection = () => {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">  
           {/* Left: Contact Form */}
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-xl">
             <h3 className="text-2xl font-bold mb-6 text-white">Mesaj Gönder</h3>

@@ -4,6 +4,13 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRight, ArrowRight } from 'lucide-react'
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from '@/components/ui/carousel'
 
 export const HeroSection = () => {
   // For parallax effect
@@ -19,6 +26,38 @@ export const HeroSection = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Ürün görselleri ve bilgileri
+  const products = [
+    {
+      id: 1,
+      title: 'Modern Oyun Parkı',
+      category: 'Öne Çıkan',
+      image: '/product-showcase.jpg',
+      link: '#playgrounds'
+    },
+    {
+      id: 2,
+      title: 'Spor Ekipmanları',
+      category: 'Yeni',
+      image: '/sports-equipment.jpg',
+      link: '#sports'
+    },
+    {
+      id: 3,
+      title: 'Kent Mobilyaları',
+      category: 'Popüler',
+      image: '/urban-furniture.jpg',
+      link: '#furniture'
+    },
+    {
+      id: 4,
+      title: 'Çocuk Oyun Alanı',
+      category: 'Tasarım',
+      image: '/playground.png',
+      link: '#playground'
+    }
+  ]
+
   return (
     <>
       <section 
@@ -31,7 +70,7 @@ export const HeroSection = () => {
             className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-black/30 z-10"
           />
           <Image
-            src="/encoparkkidplaying.jpg" // Replace with your park image
+            src="/görsel2.jpg" // Replace with your park image
             alt="Park background"
             fill
             priority
@@ -100,38 +139,59 @@ export const HeroSection = () => {
             </div> */}
           </div>
           
-          {/* Right section: Floating product showcase */}
+          {/* Right section: Floating product showcase with Carousel */}
           <div className="relative w-full max-w-lg lg:max-w-md xl:max-w-lg hidden md:block">
-            <Link href="#playgrounds" className="group relative block">
-              <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 transition-all duration-500 group-hover:shadow-orange-500/20 group-hover:border-orange-500/20">
-                {/* Glass effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
-                <Image
-                  src="/product-showcase.jpg" // Replace with your product image
-                  alt="Ürün Görseli"
-                  fill
-                  className="object-cover scale-105 transition-all duration-700 group-hover:scale-115"
+            <Carousel 
+              className="w-full" 
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+            >
+              <CarouselContent>
+                {products.map((product) => (
+                  <CarouselItem key={product.id}>
+                    <Link href={product.link} className="group relative block">
+                      <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 transition-all duration-500 group-hover:shadow-orange-500/20 group-hover:border-orange-500/20">
+                        {/* Glass effect overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
+                        <Image
+                          src={product.image}
+                          alt={product.title}
+                          fill
+                          className="object-cover scale-105 transition-all duration-700 group-hover:scale-115"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform transition-transform duration-500 group-hover:translate-y-0">
+                          <div className="flex items-center space-x-2">
+                            <span className="w-8 h-1 bg-orange-500 rounded-full"></span>
+                            <p className="text-white/90 text-sm font-medium">{product.category}</p>
+                          </div>
+                          <h3 className="text-white text-xl font-bold mt-2 drop-shadow-md">{product.title}</h3>
+                          
+                          <div className="flex items-center mt-4 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            <span className="text-white text-sm font-medium mr-2">İncele</span>
+                            <div className="bg-orange-500 rounded-full p-1">
+                              <ArrowRight className="w-4 h-4 text-white" />
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-5"></div>
+                      </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="mt-4 flex justify-center gap-2">
+                <CarouselPrevious 
+                  className="static translate-y-0 mx-1 bg-white/10 hover:bg-white/20 border-none text-white" 
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform transition-transform duration-500 group-hover:translate-y-0">
-                  <div className="flex items-center space-x-2">
-                    <span className="w-8 h-1 bg-orange-500 rounded-full"></span>
-                    <p className="text-white/90 text-sm font-medium">Öne Çıkan</p>
-                  </div>
-                  <h3 className="text-white text-xl font-bold mt-2 drop-shadow-md">Modern Oyun Parkı</h3>
-                  
-                  {/* Hidden button that shows on hover */}
-                  <div className="flex items-center mt-4 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                    <span className="text-white text-sm font-medium mr-2">İncele</span>
-                    <div className="bg-orange-500 rounded-full p-1">
-                      <ArrowRight className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-5"></div>
+                <CarouselNext 
+                  className="static translate-y-0 mx-1 bg-white/10 hover:bg-white/20 border-none text-white" 
+                />
               </div>
-            </Link>
+            </Carousel>
           </div>
         </div>
         
